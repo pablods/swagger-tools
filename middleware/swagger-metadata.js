@@ -86,8 +86,11 @@ var expressStylePath = function expressStylePath (basePath, apiPath) {
     apiPath = apiPath.substring(1);
   }
 
+  // Escape parentethis to avoid confusion with regex
+  var path = (basePath + apiPath).replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+
   // Replace Swagger syntax for path parameters with Express' version (All Swagger path parameters are required)
-  return (basePath + apiPath).replace(/{/g, ':').replace(/}/g, '');
+  return path.replace(/{/g, ':').replace(/}/g, '');
 };
 var convertValue = function convertValue (value, schema, type) {
   var original = value;
